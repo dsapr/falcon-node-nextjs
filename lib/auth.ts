@@ -4,6 +4,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import GoogleProvider from 'next-auth/providers/google'
 import { nanoid } from 'nanoid'
 import Credentials from 'next-auth/providers/credentials'
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -15,7 +16,7 @@ export const authOptions: NextAuthOptions = {
   },
   providers: [
     // 凭证认证
-    Credentials({
+    CredentialsProvider({
       name: 'credentials',
       credentials: {
         email: { label: 'email', type: 'text' },
@@ -39,6 +40,8 @@ export const authOptions: NextAuthOptions = {
         return user
       },
     }),
+    // Email 认证
+    
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
